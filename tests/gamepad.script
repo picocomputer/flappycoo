@@ -1,0 +1,30 @@
+# A starts a game, and Start pauses it, resumes it and pauses it again. The
+# title screen changes every frame, and a stopped program leaves the console
+# cursor blinking every 30 frames, so an expect-same over exactly 30 frames
+# passes only on a paused game.
+run 30
+pad 0 connect
+run 5
+pad 0 press a
+run 2
+pad 0 release a
+run 20
+pad 0 press start
+run 2
+pad 0 release start
+run 5
+mark
+run 30
+expect-same
+pad 0 press start
+run 2
+pad 0 release start
+run 5
+expect-changed
+pad 0 press start
+run 2
+pad 0 release start
+run 5
+mark
+run 30
+expect-same

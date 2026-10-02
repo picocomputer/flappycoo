@@ -1,2 +1,6 @@
-This information is displayed with the HELP and INFO monitor commands.
-Please change it to suit your project.
+Flappy Coo
+
+Flap through the gaps between the pipes. Each pipe passed scores a point.
+
+Flap:  Space or click
+Pause: P or right click
