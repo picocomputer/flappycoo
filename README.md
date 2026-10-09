@@ -122,7 +122,7 @@ and no address is written twice. See
 | PSG | 64 | First, because the PSG must not cross a 256-byte page. |
 | Palettes | 644 | Together, because the FPGA reads the colors of paletted sprites through a 1 KB direct-mapped cache, and colors within 1 KB of each other never collide in it. |
 | Mode configurations and sprites | 192 | |
-| Keyboard, tablet, gamepads | 124 | |
+| Keyboard, tablet, gamepads | 108 | |
 | Text | 1080 | 40x27 characters. |
 | Sky and ground maps | 1752 | |
 | Sky and ground tiles | 8960 | Room for 256 sky tiles, so new art does not move the addresses after it. |
@@ -130,7 +130,7 @@ and no address is written twice. See
 | Logo | 6560 | |
 | Pipe body and cap | 1240 | |
 
-The layout uses 54312 bytes and leaves 11224 free.
+The layout uses 54296 bytes and leaves 11240 free.
 
 ## Tests
 
