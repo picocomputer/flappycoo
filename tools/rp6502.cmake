@@ -967,8 +967,11 @@ function(rp6502_web target)
     string(REPLACE ";" "\n" listed "${folder_files}")
     file(CONFIGURE OUTPUT "${dir}/sources.txt"
         CONTENT "${web_zip} ${web_hash}\n${listed}\n" @ONLY)
+    # The publish workflow reads this file to screenshot the player with the
+    # same emulator.
+    file(CONFIGURE OUTPUT "${CMAKE_BINARY_DIR}/CMakeFiles/${name}.emulator"
+        CONTENT "${source}\n" @ONLY)
     set(out "${CMAKE_BINARY_DIR}/web")
-    file(CONFIGURE OUTPUT "${out}/${name}.emulator" CONTENT "${source}\n" @ONLY)
 
     set(stage "${out}/${name}")
     set(copy_folder)
@@ -1038,7 +1041,7 @@ endfunction()
 
 # Fetches the BASIC ROM or web zip that <spec> names into the build folder,
 # and sets <out_var> to the file and <source_var> to the origin of the file,
-# the text of web/<name>.emulator. A ref is a release tag, or else a commit
+# the text of CMakeFiles/<name>.emulator. A ref is a release tag, or else a commit
 # with a CI artifact. Tags and commits are fetched once per build folder. The
 # latest release and branches are looked up at each configure, or taken from
 # the last lookup offline.
