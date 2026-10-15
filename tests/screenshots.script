@@ -1,4 +1,4 @@
-# Pictures of each screen, written to the build directory.
+# Pictures of each screen, written to test/screenshots/ in the build directory.
 run 60
 shot "title.png"
 press space

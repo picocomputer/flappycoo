@@ -1,10 +1,9 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.28)
 
 include(${CMAKE_CURRENT_LIST_DIR}/tools/rp6502.cmake)
 
 project(flappycoo C)
 
-enable_testing()
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
 # PNG conversion to XRAM data files, one command per image
@@ -91,13 +90,7 @@ target_sources(flappycoo PRIVATE
 
 # Emulator scripts that play the game ROM
 foreach(script keyboard tablet gamepad screenshots)
-    add_test(NAME ${script}
-        COMMAND ${Python3_EXECUTABLE} ${RP6502_TOOLS_DIR}/rp6502.py
-            -c ${CMAKE_CURRENT_SOURCE_DIR}/.rp6502 execute
-            --script ${CMAKE_CURRENT_SOURCE_DIR}/tests/${script}.script
-            --seed 1 --save-dir ${CMAKE_CURRENT_BINARY_DIR}/save
-            ${CMAKE_CURRENT_BINARY_DIR}/flappycoo.rp6502
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    )
+    rp6502_test(NAME ${script} COMMAND tests/${script}.script
+        $<TARGET_PROPERTY:flappycoo,RP6502_ROM>)
     set_tests_properties(${script} PROPERTIES TIMEOUT 60)
 endforeach()
