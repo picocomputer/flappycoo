@@ -59,7 +59,7 @@ add_custom_command(
 )
 
 add_executable(flappycoo)
-rp6502_map(flappycoo src/xram.h "XRAM_.*")
+rp6502_align(flappycoo "XRAM_.*")
 rp6502_asset(flappycoo help src/help.txt)
 rp6502_asset(flappycoo XRAM(XRAM_COO_PALETTE) ${CMAKE_CURRENT_BINARY_DIR}/coo_pal.bin)
 rp6502_asset(flappycoo XRAM(XRAM_SKY_PALETTE) ${CMAKE_CURRENT_BINARY_DIR}/sky_pal.bin)
