@@ -77,8 +77,8 @@ jobs:
           fi
           # The web package holds a second copy of each ROM, so the ROM
           # paths are written in full, not matched with a wildcard.
-          cc65_rom=build/cc65/release/flappycoo.rp6502
-          llvm_mos_rom=build/llvm-mos/release/flappycoo.rp6502
+          cc65_rom=build/cc65/release/flappycoo/flappycoo.rp6502
+          llvm_mos_rom=build/llvm-mos/release/flappycoo/flappycoo.rp6502
           cc65_size=$(stat -c %s "$cc65_rom")
           llvm_mos_size=$(stat -c %s "$llvm_mos_rom")
           if [ "$llvm_mos_size" -lt "$cc65_size" ]; then
@@ -92,7 +92,7 @@ jobs:
           cp "$rom" "$name/flappycoo.rp6502"
           for build in cc65 llvm-mos; do
             for shot in title play paused over; do
-              cp "build/$build/release/$shot.png" "$name/$build/"
+              cp "build/$build/release/test/screenshots/$shot.png" "$name/$build/"
             done
           done
           ls -lR "$name"

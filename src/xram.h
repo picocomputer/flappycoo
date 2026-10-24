@@ -7,7 +7,7 @@
 #include <stdint.h>
 #include "game.h"
 
-#define xreg_vga_canvas(...) xreg(1, 0, 0, __VA_ARGS__)
+#define xreg_vga_canvas(...) xreg(0x1, 0x0, 0x00, __VA_ARGS__)
 
 #define CANVAS_CONSOLE 0
 #define CANVAS_320X240 1
@@ -21,7 +21,7 @@
     (((unsigned)(b) << 11) | ((unsigned)(g) << 6) | (unsigned)(r))
 #define COLOR_ALPHA_MASK (1u << 5)
 
-#define xreg_vga_mode1(...) xreg(1, 0, 1, 1, __VA_ARGS__)
+#define xreg_vga_mode1(...) xreg(0x1, 0x0, 0x01, 1, __VA_ARGS__)
 
 #define MODE1_1BPP 0x00
 #define MODE1_4BPPR 0x01
@@ -80,7 +80,7 @@ typedef struct
     uint16_t bg_color;
 } mode1_16bpp_data_t; /* layout */
 
-#define xreg_vga_mode2(...) xreg(1, 0, 1, 2, __VA_ARGS__)
+#define xreg_vga_mode2(...) xreg(0x1, 0x0, 0x01, 2, __VA_ARGS__)
 
 #define MODE2_1BPP 0x00
 #define MODE2_2BPP 0x01
@@ -115,7 +115,7 @@ typedef struct
     uint16_t xram_tile_ptr;
 } mode2_config_t; /* layout */
 
-#define xreg_vga_mode3(...) xreg(1, 0, 1, 3, __VA_ARGS__)
+#define xreg_vga_mode3(...) xreg(0x1, 0x0, 0x01, 3, __VA_ARGS__)
 
 #define MODE3_1BPP 0x00
 #define MODE3_2BPP 0x01
@@ -137,7 +137,7 @@ typedef struct
     uint16_t xram_palette_ptr;
 } mode3_config_t; /* layout */
 
-#define xreg_vga_mode5(...) xreg(1, 0, 1, 5, __VA_ARGS__)
+#define xreg_vga_mode5(...) xreg(0x1, 0x0, 0x01, 5, __VA_ARGS__)
 
 #define MODE5_1BPP 0x00
 #define MODE5_2BPP 0x01
@@ -204,7 +204,7 @@ typedef struct
 
 #define KEYBOARD_PRESSED(keys, code) ((keys)[(code) >> 3] & (1 << ((code) & 7)))
 
-#define xreg_ria_keyboard(...) xreg(0, 0, 0, __VA_ARGS__)
+#define xreg_ria_keyboard(...) xreg(0x0, 0x0, 0x00, __VA_ARGS__)
 
 typedef struct
 {
@@ -230,7 +230,7 @@ typedef struct
 #define TABLET_CURSOR_RESIZE_EW 5
 #define TABLET_CURSOR_RESIZE_NS 6
 
-#define xreg_ria_tablet(...) xreg(0, 0, 3, __VA_ARGS__)
+#define xreg_ria_tablet(...) xreg(0x0, 0x0, 0x03, __VA_ARGS__)
 
 typedef struct
 {
@@ -239,6 +239,15 @@ typedef struct
     uint8_t x_lo;
     uint8_t yx_hi;
 } tablet_contact_t;
+
+typedef struct
+{
+    uint8_t control;
+    uint8_t status;
+    uint8_t wheel;
+    uint8_t pan;
+    tablet_contact_t contact;
+} tablet_pointer_t;
 
 typedef struct
 {
@@ -290,7 +299,7 @@ typedef struct
 #define GAMEPAD_BTN1_L3 0x20
 #define GAMEPAD_BTN1_R3 0x40
 
-#define xreg_ria_gamepad(...) xreg(0, 0, 2, __VA_ARGS__)
+#define xreg_ria_gamepad(...) xreg(0x0, 0x0, 0x02, __VA_ARGS__)
 
 typedef struct
 {
@@ -324,7 +333,7 @@ typedef struct
 #define PSG_FREQ_HZ(hz) ((hz) * 3u)
 #define PSG_PAN(pan) ((uint8_t)((pan) * 2))
 
-#define xreg_ria_psg(...) xreg(0, 1, 0, __VA_ARGS__)
+#define xreg_ria_psg(...) xreg(0x0, 0x1, 0x00, __VA_ARGS__)
 
 typedef struct
 {

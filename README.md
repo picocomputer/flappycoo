@@ -138,7 +138,7 @@ The layout uses 54296 bytes and leaves 11240 free.
 |---|---|---|
 | `host_tests` | The rules in `src/game.c`, tested by `tests/test_game.c` with [utest.h](https://github.com/sheredom/utest.h), including a bot that must pass 50 pipes. | `host` |
 | `keyboard`, `tablet`, `gamepad` | Each device starts a game, pauses it, resumes it and pauses it again, and the canvas stays still while paused. A tablet pointer that only hovers does not start a game. | cc65, llvm-mos |
-| `screenshots` | Writes `title.png`, `play.png`, `paused.png` and `over.png` into the build directory. | cc65, llvm-mos |
+| `screenshots` | Writes `title.png`, `play.png`, `paused.png` and `over.png` into `test/screenshots/` in the build directory. | cc65, llvm-mos |
 
 The host tests need gcc for your computer. On Windows, install it with
 `winget install -e --id BrechtSanders.WinLibs.POSIX.UCRT` and open a new
@@ -154,17 +154,19 @@ $ cmake --build --preset host
 $ ctest --preset host
 ```
 
-The emulator tests run in the build directory of a compiler preset, after
-a build with that preset:
+The emulator tests run in the build directory of a compiler preset. The
+first test, `rp6502.build`, builds that preset:
 
 ```bash
 $ ctest --test-dir build/llvm-mos/release --output-on-failure
 ```
 
 The `tests/*.script` files are emulator scripts. They press keys and
-buttons, run frames, and compare the canvas. They run with `--seed 1`, so
-every run is the same. [Scripting](https://picocomputer.github.io/emu.html#scripting)
-lists the commands.
+buttons, run frames, and compare the canvas. Each run has a new random
+seed, and a failure ends with the seed that repeats it, as
+[Testing](https://picocomputer.github.io/sdk.html#testing) describes.
+[Scripting](https://picocomputer.github.io/emu.html#scripting) lists the
+commands.
 
 ## Automation
 
